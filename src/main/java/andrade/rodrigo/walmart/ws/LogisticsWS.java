@@ -13,9 +13,9 @@ public interface LogisticsWS {
 
 
     //TODO: define sane response object
-    public boolean addMap(String map);
+    public boolean addMap(String id, String map);
 
     //TODO: define sane response object
-    public String queryRouteStr(String query);
+    public String queryRouteStr(String id, String start, String query, float autonomy, float ltPrice);
 
 }

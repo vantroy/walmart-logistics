@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+    <import resource="classpath:META-INF/cxf/cxf-extension-local.xml" />
+
+    <!-- SOAP Set up local transport for testing -->
+    <bean class="org.apache.cxf.transport.local.LocalTransportFactory" lazy-init="false">
+        <property name="transportIds">
+            <list>
+                <value>http://cxf.apache.org/transports/local</value>
+                <value>http://schemas.xmlsoap.org/soap/http</value>
+                <value>http://schemas.xmlsoap.org/wsdl/soap/http</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- SOAP Transport local server -->
+    <jaxws:endpoint  id="logistics"
+                     implementor="andrade.rodrigo.walmart.ws.LogisticsWSImpl"
+                     address="local://LogisticsWS" />
+
+
+    <!-- SOAP Test client -->
+    <jaxws:client id="client"
+                  serviceClass="andrade.rodrigo.walmart.ws.LogisticsWS"
+                  address="local://LogisticsWS" />
+
+
+</beans>
