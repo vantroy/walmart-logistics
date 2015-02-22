@@ -1,4 +1,4 @@
-package andrade.rodrigo.walmart.model;
+package andrade.rodrigo.walmart;
 
 import andrade.rodrigo.walmart.constants.Status;
 import andrade.rodrigo.walmart.exceptions.IllegalMapException;

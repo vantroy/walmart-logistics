@@ -9,10 +9,12 @@
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
 
+    <import resource="persistence.xml"/>
+
     <jaxws:endpoint  id="logistics"
                      implementor="andrade.rodrigo.walmart.ws.LogisticsWSImpl"
                      address="/LogisticsWS" />
 
-    <bean id="graphOperations" class="andrade.rodrigo.walmart.model.GraphService"/>
+    <bean id="graphOperations" class="andrade.rodrigo.walmart.GraphService"/>
 
 </beans>

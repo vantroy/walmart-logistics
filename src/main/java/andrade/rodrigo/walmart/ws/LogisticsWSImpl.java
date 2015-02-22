@@ -1,8 +1,8 @@
 package andrade.rodrigo.walmart.ws;
 
+import andrade.rodrigo.walmart.GraphService;
 import andrade.rodrigo.walmart.constants.Status;
 import andrade.rodrigo.walmart.exceptions.IllegalMapException;
-import andrade.rodrigo.walmart.model.GraphService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.feature.Features;

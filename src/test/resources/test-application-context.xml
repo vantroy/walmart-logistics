@@ -9,6 +9,8 @@
     <import resource="classpath:META-INF/cxf/cxf.xml" />
     <import resource="classpath:META-INF/cxf/cxf-extension-local.xml" />
 
+    <import resource="persistence.xml"/>
+
     <!-- SOAP Set up local transport for testing -->
     <bean class="org.apache.cxf.transport.local.LocalTransportFactory" lazy-init="false">
         <property name="transportIds">
@@ -31,6 +33,6 @@
                   serviceClass="andrade.rodrigo.walmart.ws.LogisticsWS"
                   address="local://LogisticsWS" />
 
-    <bean id="graphOperations" class="andrade.rodrigo.walmart.model.GraphService"/>
+    <bean id="graphOperations" class="andrade.rodrigo.walmart.GraphService"/>
 
 </beans>
