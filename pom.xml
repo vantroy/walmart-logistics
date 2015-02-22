@@ -11,22 +11,25 @@
 
     <properties>
         <cxf-ver>2.7.8</cxf-ver>
+        <spring-ver>3.2.5.RELEASE</spring-ver>
     </properties>
 
     <dependencies>
 
+        <!-- Spring deps -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>3.2.5.RELEASE</version>
+            <version>${spring-ver}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>3.2.5.RELEASE</version>
+            <version>${spring-ver}</version>
         </dependency>
 
+        <!-- CXF and WS related -->
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -41,24 +44,10 @@
 
         <dependency>
             <groupId>org.apache.cxf</groupId>
-            <artifactId>cxf-rt-transports-local</artifactId>
-            <version>${cxf-ver}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>test</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http</artifactId>
             <version>${cxf-ver}</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-core</artifactId>
@@ -69,6 +58,29 @@
             <groupId>javax.jws</groupId>
             <artifactId>jsr181-api</artifactId>
             <version>1.0-MR1</version>
+        </dependency>
+
+        <!-- Graphing -->
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-core
+            </artifactId>
+            <version>0.9.0</version>
+        </dependency>
+
+        <!-- For testing -->
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-local</artifactId>
+            <version>${cxf-ver}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -89,13 +101,13 @@
             </plugin>
 
             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.1</version>
-            <configuration>
-                <source>1.7</source>
-                <target>1.7</target>
-            </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
             </plugin>
 
             <plugin>

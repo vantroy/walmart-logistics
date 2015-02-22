@@ -1,8 +1,12 @@
 package andrade.rodrigo.walmart.ws;
 
+import andrade.rodrigo.walmart.constants.Status;
+import andrade.rodrigo.walmart.exceptions.IllegalMapException;
+import andrade.rodrigo.walmart.model.GraphService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.feature.Features;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.jws.WebService;
 
@@ -18,10 +22,13 @@ public class LogisticsWSImpl implements LogisticsWS {
 
     private Log log = LogFactory.getLog(LogisticsWS.class);
 
+    @Autowired
+    private GraphService graphOperations;
+
     @Override
-    public boolean addMap(String id, String map) {
+    public Status addMap(String id, String map) throws IllegalMapException {
         log.info("Received new addMap request.");
-        return false; //TODO: flesh it out
+        return graphOperations.addGraph(id, map); //TODO: flesh it out
     }
 
     @Override

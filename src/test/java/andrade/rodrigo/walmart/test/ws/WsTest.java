@@ -1,5 +1,7 @@
 package andrade.rodrigo.walmart.test.ws;
 
+import andrade.rodrigo.walmart.constants.Status;
+import andrade.rodrigo.walmart.exceptions.IllegalMapException;
 import andrade.rodrigo.walmart.ws.LogisticsWS;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +20,7 @@ import static org.junit.Assert.assertEquals;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/test-application-context.xml" })
+@ContextConfiguration(locations = {"classpath:/test-application-context.xml"})
 public class WsTest {
 
     @Autowired
@@ -40,8 +42,50 @@ public class WsTest {
                 "B E 50\n" +
                 "D E 30";
 
-        boolean res = client.addMap(id, map);
-        assertEquals(true, res);
+        Status res = null;
+        try {
+            res = client.addMap(id, map);
+        } catch (IllegalMapException e) {
+            e.printStackTrace();
+        }
+        assertEquals(Status.SUCCESS, res);
+    }
+
+    @Test(expected=IllegalMapException.class)
+    public void testAddMapExceptionWrongNumber() throws IllegalMapException {
+        String id = "TEST_WRONG_ARGS_1";
+        String map = "A B 10\n" +
+                "B D 15\n" +
+                "D E A"; // <-- Last item in this line should be a number
+
+        client.addMap(id, map);
+    }
+
+    @Test(expected=IllegalMapException.class)
+    public void testAddMapExceptionFaultyArguments() throws IllegalMapException {
+        String id = "TEST_WRONG_ARGS_2";
+        String map = "A B 10\n" +
+                "B D 15" + // <-- Missing line break == wrong number of items
+                "D E 3";
+
+        client.addMap(id, map);
+    }
+
+    @Test
+    public void testAddMapExceptionWrapped() {
+        // Asserts if the right type of "wrapped" exception is properly signaled
+        String id = "TEST_WRONG_ARGS_3";
+        String map = "A B 10\n" +
+                "B D 15\n" +
+                "D E A"; // <-- Last item in this line should be a number
+        Exception e = null;
+        try {
+            client.addMap(id, map);
+        } catch (IllegalMapException e1) {
+            e = e1;
+            e1.printStackTrace();
+        }
+        assertEquals("Caught java.lang.NumberFormatException: For input string: \"A\"", e.getMessage());
     }
 
     @Test

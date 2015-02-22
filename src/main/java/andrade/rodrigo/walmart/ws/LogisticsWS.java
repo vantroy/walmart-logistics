@@ -1,5 +1,8 @@
 package andrade.rodrigo.walmart.ws;
 
+import andrade.rodrigo.walmart.constants.Status;
+import andrade.rodrigo.walmart.exceptions.IllegalMapException;
+
 import javax.jws.WebService;
 
 /**
@@ -13,7 +16,7 @@ public interface LogisticsWS {
 
 
     //TODO: define sane response object
-    public boolean addMap(String id, String map);
+    public Status addMap(String id, String map) throws IllegalMapException;
 
     //TODO: define sane response object
     public String queryRouteStr(String id, String start, String query, float autonomy, float ltPrice);
