@@ -12,4 +12,6 @@ public interface LocationRepository extends GraphRepository<Location> {
 
     Location findByName(String name);
 
+    Location findByNameAndMap(String name, String map);
+
 }

@@ -15,6 +15,6 @@
                      implementor="andrade.rodrigo.walmart.ws.LogisticsWSImpl"
                      address="/LogisticsWS" />
 
-    <bean id="graphService" class="andrade.rodrigo.walmart.GraphService"/>
+    <!--<bean id="graphService" class="andrade.rodrigo.walmart.GraphServiceImpl"/>-->
 
 </beans>

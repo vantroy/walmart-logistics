@@ -1,8 +1,12 @@
 package andrade.rodrigo.walmart.persistence.domain;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import andrade.rodrigo.walmart.constants.RelationType;
+import org.neo4j.graphdb.Direction;
+import org.springframework.data.neo4j.annotation.*;
+import org.springframework.data.neo4j.support.index.IndexType;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by Rodrigo Del Cistia Andrade <vantroy@gmail.com>
@@ -16,11 +20,14 @@ public class Location  {
     @GraphId
     Long id;
 
-    @Indexed(unique = true)
     String name;
 
-    @Indexed
+    @Indexed (indexType = IndexType.LABEL)
     String map;
+
+    @RelatedToVia(type = RelationType.CONNECTS_TO, direction = Direction.OUTGOING)
+    @Fetch
+    Set<Edge> connections = new HashSet<Edge>();
 
     public Location() {
     }
@@ -30,15 +37,17 @@ public class Location  {
         this.map = map;
     }
 
-    public Edge leadsTo(Location dest, float weight) {
+    public Location leadsTo(Location dest, float weight) {
         Edge edge = new Edge(this, dest, weight);
-        return edge;
+        connections.add(edge);
+        return this;
     }
 
     public Long getId() {
         return id;
     }
 
+    @Indexed (unique = false)
     public String getName() {
         return name;
     }
@@ -55,6 +64,14 @@ public class Location  {
         this.map = map;
     }
 
+    public Set<Edge> getConnections() {
+        return connections;
+    }
+
+    public void setConnections(Set<Edge> connections) {
+        this.connections = connections;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,6 +79,8 @@ public class Location  {
 
         Location location = (Location) o;
 
+        if (connections != null ? !connections.equals(location.connections) : location.connections != null)
+            return false;
         if (id != null ? !id.equals(location.id) : location.id != null) return false;
         if (map != null ? !map.equals(location.map) : location.map != null) return false;
         if (name != null ? !name.equals(location.name) : location.name != null) return false;
@@ -74,6 +93,7 @@ public class Location  {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (map != null ? map.hashCode() : 0);
+        result = 31 * result + (connections != null ? connections.hashCode() : 0);
         return result;
     }
 }

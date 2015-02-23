@@ -1,5 +1,6 @@
 package andrade.rodrigo.walmart.test;
 
+import andrade.rodrigo.walmart.constants.RelationType;
 import andrade.rodrigo.walmart.constants.Status;
 import andrade.rodrigo.walmart.exceptions.IllegalMapException;
 import andrade.rodrigo.walmart.persistence.dao.LocationRepository;
@@ -8,7 +9,10 @@ import andrade.rodrigo.walmart.ws.LogisticsWS;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.ResourceIterable;
+import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.graphdb.traversal.Traverser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -18,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
+import static org.neo4j.graphdb.DynamicRelationshipType.withName;
 
 /**
  * Created by Rodrigo Del Cistia Andrade <vantroy@gmail.com>
@@ -123,6 +128,7 @@ public class WsTest {
         Location retrieveLocation = template.findOne(location.getId(), Location.class);
         assertEquals("retrieved location matches persisted one", location, retrieveLocation);
         assertEquals("retrieved movie name matches", "A", retrieveLocation.getName());
+        template.delete(location);
     }
 
     @Test
@@ -132,27 +138,85 @@ public class WsTest {
         Location retrieveLocation = locationRepo.findByName(location.getName());
         assertEquals("retrieved location matches persisted one", location, retrieveLocation);
         assertEquals("retrieved movie name matches", "A", retrieveLocation.getName());
+        template.delete(location);
     }
 
     @Test
     @Transactional
     public void persistentMapWithConnections() {
         final String WEIGHT = "weight";
-        Location a = new Location("A", "SP");
-        Location b = new Location("B", "SP");
-        Location c = new Location("C", "SP");
-        Location d = new Location("D", "SP");
+        Location a = template.save(new Location("A", "SP"));
+        Location b = template.save(new Location("B", "SP"));
+        Location c = template.save(new Location("C", "SP"));
+        Location d = template.save(new Location("D", "SP"));
 
         template.save(a.leadsTo(b, 1));
         template.save(b.leadsTo(c, 2));
         template.save(c.leadsTo(d, 3));
 
-        template.traversalDescription().traverse((Node) a);
-        assertEquals("4", locationRepo.count());
-        Traverser traverser = template.getGraphDatabase()
-                .traversalDescription()
-                .traverse(template.getGraphDatabaseService().getNodeById(a.getId()));
+        // check number of saved nodes
+        assertEquals(4l, locationRepo.count());
 
+        String expected = "ABCD";
+        StringBuffer result =  new StringBuffer();
+
+        // Test traversal by Java API
+        Traverser traverser = template.getGraphDatabase()
+                .traversalDescription().depthFirst()
+                .traverse(template.getGraphDatabaseService().getNodeById(a.getId()));
+        ResourceIterable<Node> it = traverser.nodes();
+        for (Node node : it) {
+            System.out.println("NODE: " + node.getProperty("name"));
+            result.append(node.getProperty("name"));
+        }
+        assertEquals(expected, result.toString());
+
+        // Test Traversal by Spring Data
+        result = new StringBuffer();
+        TraversalDescription traversal = template.getGraphDatabaseService().traversalDescription().relationships(withName(RelationType.CONNECTS_TO), Direction.BOTH);
+        Iterable<Location> iter = locationRepo.findAllByTraversal(locationRepo.findByNameAndMap("A", "SP"), traversal);
+        for (Location location : iter) {
+            System.out.println("NODE: " + location.getName());
+            result.append(location.getName());
+        }
+        assertEquals(expected, result.toString());
+        locationRepo.delete(iter);
     }
+
+    @Test
+    @Transactional
+    public void testMultiMapsWithSameNamedNodes() {
+        final String WEIGHT = "weight";
+        Location a = template.save(new Location("A", "SP"));
+        Location b = template.save(new Location("B", "SP"));
+        Location c = template.save(new Location("C", "SP"));
+        Location d = template.save(new Location("D", "SP"));
+        template.save(a.leadsTo(b, 1));
+        template.save(b.leadsTo(c, 2));
+        template.save(c.leadsTo(d, 3));
+
+        Location a2 = template.save(new Location("A", "BA"));
+        Location b2 = template.save(new Location("B", "BA"));
+        Location c2 = template.save(new Location("C", "BA"));
+        Location d2 = template.save(new Location("D", "BA"));
+
+        template.save(a2.leadsTo(d2, 1));
+        template.save(b2.leadsTo(a2, 2));
+        template.save(c2.leadsTo(b2, 3));
+        template.save(d2.leadsTo(c2, 3));
+
+        // Test Traversal by Spring Data
+        String expected = "ADCB";
+        StringBuffer result = new StringBuffer();
+        TraversalDescription traversal = template.getGraphDatabaseService().traversalDescription().relationships(withName(RelationType.CONNECTS_TO), Direction.BOTH);
+        Iterable<Location> iter = locationRepo.findAllByTraversal(locationRepo.findByNameAndMap("A", "BA"), traversal);
+        for (Location location : iter) {
+            System.out.println("NODE: " + location.getName());
+            result.append(location.getName());
+        }
+        assertEquals(expected, result.toString());
+        locationRepo.delete(iter);
+    }
+
 
 }

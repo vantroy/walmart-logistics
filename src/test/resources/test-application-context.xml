@@ -33,6 +33,6 @@
                   serviceClass="andrade.rodrigo.walmart.ws.LogisticsWS"
                   address="local://LogisticsWS" />
 
-    <bean id="graphOperations" class="andrade.rodrigo.walmart.GraphService"/>
+    <bean id="graphOperations" class="andrade.rodrigo.walmart.GraphServiceImpl"/>
 
 </beans>

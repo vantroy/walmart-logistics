@@ -1,6 +1,6 @@
 package andrade.rodrigo.walmart.ws;
 
-import andrade.rodrigo.walmart.GraphService;
+import andrade.rodrigo.walmart.GraphServiceImpl;
 import andrade.rodrigo.walmart.constants.Status;
 import andrade.rodrigo.walmart.exceptions.IllegalMapException;
 import org.apache.commons.logging.Log;
@@ -23,7 +23,7 @@ public class LogisticsWSImpl implements LogisticsWS {
     private Log log = LogFactory.getLog(LogisticsWS.class);
 
     @Autowired
-    private GraphService graphOperations;
+    private GraphServiceImpl graphOperations;
 
     @Override
     public Status addMap(String id, String map) throws IllegalMapException {
