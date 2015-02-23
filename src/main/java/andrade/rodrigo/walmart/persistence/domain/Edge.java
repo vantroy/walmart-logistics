@@ -34,5 +34,13 @@ public class Edge {
         this.start = start;
     }
 
-
+    @Override
+    public String toString() {
+        return "Edge{" +
+                "id=" + id +
+                ", start=" + start.getName() +
+                ", destination=" + destination.getName() +
+                ", weight=" + weight +
+                '}';
+    }
 }

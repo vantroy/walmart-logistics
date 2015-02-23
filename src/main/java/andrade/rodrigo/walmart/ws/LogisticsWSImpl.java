@@ -1,6 +1,6 @@
 package andrade.rodrigo.walmart.ws;
 
-import andrade.rodrigo.walmart.GraphServiceImpl;
+import andrade.rodrigo.walmart.GraphService;
 import andrade.rodrigo.walmart.constants.Status;
 import andrade.rodrigo.walmart.exceptions.IllegalMapException;
 import org.apache.commons.logging.Log;
@@ -23,7 +23,7 @@ public class LogisticsWSImpl implements LogisticsWS {
     private Log log = LogFactory.getLog(LogisticsWS.class);
 
     @Autowired
-    private GraphServiceImpl graphService;
+    private GraphService graphService;
 
     @Override
     public Status addMap(String id, String map) throws IllegalMapException {
@@ -32,7 +32,7 @@ public class LogisticsWSImpl implements LogisticsWS {
     }
 
     @Override
-    public String queryRouteStr(String id, String start, String query, float autonomy, float ltPrice) {
+    public String queryRoute(String mapName, String start, String destination, float autonomy, float ltPrice) {
         return "not yet";  //TODO: flesh it out
     }
 }

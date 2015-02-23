@@ -20,6 +20,7 @@ public class Location  {
     @GraphId
     Long id;
 
+    @Indexed
     String name;
 
     @Indexed (indexType = IndexType.LABEL)
@@ -95,5 +96,15 @@ public class Location  {
         result = 31 * result + (map != null ? map.hashCode() : 0);
         result = 31 * result + (connections != null ? connections.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", map='" + map + '\'' +
+                ", connections=" + connections +
+                '}';
     }
 }

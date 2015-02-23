@@ -19,6 +19,6 @@ public interface LogisticsWS {
     public Status addMap(String id, String map) throws IllegalMapException;
 
     //TODO: define sane response object
-    public String queryRouteStr(String id, String start, String query, float autonomy, float ltPrice);
+    public String queryRoute(String id, String start, String query, float autonomy, float ltPrice);
 
 }

@@ -7,19 +7,25 @@ import andrade.rodrigo.walmart.persistence.dao.LocationRepository;
 import andrade.rodrigo.walmart.persistence.domain.Location;
 import andrade.rodrigo.walmart.ws.LogisticsWS;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.neo4j.graphdb.Direction;
-import org.neo4j.graphdb.Node;
-import org.neo4j.graphdb.ResourceIterable;
+import org.neo4j.graphdb.*;
 import org.neo4j.graphdb.traversal.TraversalDescription;
 import org.neo4j.graphdb.traversal.Traverser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.neo4j.conversion.Result;
+import org.springframework.data.neo4j.core.EntityPath;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
+import org.springframework.data.neo4j.template.Neo4jOperations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.neo4j.graphdb.DynamicRelationshipType.withName;
@@ -34,6 +40,8 @@ import static org.neo4j.graphdb.DynamicRelationshipType.withName;
 @ContextConfiguration(locations = {"classpath:/test-application-context.xml"})
 public class WsTest {
 
+    private static final Logger log = LoggerFactory.getLogger(WsTest.class);
+
     @Autowired
     ApplicationContext ctx;
 
@@ -45,30 +53,83 @@ public class WsTest {
     @Autowired
     Neo4jTemplate template;
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    Neo4jOperations operations;
+
+
     private LogisticsWS client;
+    private String walMap =  "A B 10\n" +
+            "B D 15\n" +
+            "A C 20\n" +
+            "C D 30\n" +
+            "B E 50\n" +
+            "D E 30";
 
     @Before
     public void setUpClient() {
         client = (LogisticsWS) ctx.getBean("client");
+        locationRepo.deleteAll();
     }
 
     @Test
+    @Transactional
     public void testAddMap() {
         String id = "SP";
-        String map = "A B 10\n" +
-                "B D 15\n" +
-                "A C 20\n" +
-                "C D 30\n" +
-                "B E 50\n" +
-                "D E 30";
-
         Status res = null;
         try {
-            res = client.addMap(id, map);
+            res = client.addMap(id, walMap);
+
+            // Do it again to test update / keys
+            res = client.addMap(id, walMap);
         } catch (IllegalMapException e) {
             e.printStackTrace();
         }
         assertEquals(Status.SUCCESS, res);
+        Result<Location> nodes = locationRepo.findAll();
+        int i = 0;
+        for (Location location : nodes) {
+            //Visual Confirmarion that we got it right
+            System.out.println(location);
+            i++;
+        }
+        assertEquals(5, i);
+    }
+
+    @Test
+    @Transactional
+    public void findShortestPathRepositoryMethod() throws IllegalMapException {
+        String mapId = "TEST_SHORTEST_PATH";
+        Float expectedWeight = 25f;
+        float weight = 0;
+        float fuelPrice = 2.5f;
+        String expectedPath = "A B D";
+
+
+        client.addMap(mapId, walMap);
+        Location A = locationRepo.findByNameAndMap("A", mapId);
+        Location D = locationRepo.findByNameAndMap("D", mapId);
+        Iterable<Map<String, Object>> rawPath = locationRepo.findShortestPath(A.getId(), D.getId());
+        EntityPath<Location, Location> path = null;
+
+        // It returns an Iterable type. Haven't found a way around it, even if its 1 element.
+        for (Map<String, Object> map : rawPath) {
+            weight = template.convert(map.get("totalWeight"), Float.class);
+            path = template.convert(map.get("shortestPath"), EntityPath.class);
+        }
+
+        StringBuffer showPath = new StringBuffer();
+        for (PropertyContainer node : path) {
+            try {
+                showPath.append(node.getProperty("name") + " ");
+            } catch (NotFoundException e) {
+                log.debug("Safely ignoring NotFoundException while traversing generic EntityPath");
+            }
+        }
+
+        assertEquals(expectedWeight, weight, 0);
+        assertEquals(expectedPath, showPath.toString().trim());
+        System.out.println("Found path: " + showPath.toString().trim() + " " + weight * (fuelPrice/10));
     }
 
     @Test(expected=IllegalMapException.class)
@@ -85,7 +146,7 @@ public class WsTest {
     public void testAddMapExceptionFaultyArguments() throws IllegalMapException {
         String id = "TEST_WRONG_ARGS_2";
         String map = "A B 10\n" +
-                "B D 15" + // <-- Missing line break == wrong number of items
+                "B D 15" + // <-- Missing line break == wrong number elements/line
                 "D E 3";
 
         client.addMap(id, map);
@@ -109,6 +170,7 @@ public class WsTest {
     }
 
     @Test
+    @Ignore
     public void testQueryRoute() {
         String id = "SP";
         String start = "A";
@@ -116,7 +178,7 @@ public class WsTest {
         float autonomy = 10f;
         float ltPrice = 2.5f;
 
-        String res = client.queryRouteStr(id, start, dest, autonomy, ltPrice);
+        String res = client.queryRoute(id, start, dest, autonomy, ltPrice);
         assertEquals("A B D, 6.25", res);
     }
 
@@ -133,7 +195,7 @@ public class WsTest {
 
     @Test
     @Transactional
-    public void persistedLocationShouldBeRetrievableBuProperty() {
+    public void persistedLocationShouldBeRetrievableByProperty() {
         Location location =  template.save(new Location("A", "SP"));
         Location retrieveLocation = locationRepo.findByName(location.getName());
         assertEquals("retrieved location matches persisted one", location, retrieveLocation);
@@ -180,7 +242,6 @@ public class WsTest {
             result.append(location.getName());
         }
         assertEquals(expected, result.toString());
-        locationRepo.delete(iter);
     }
 
     @Test
@@ -215,7 +276,6 @@ public class WsTest {
             result.append(location.getName());
         }
         assertEquals(expected, result.toString());
-        locationRepo.delete(iter);
     }
 
 
