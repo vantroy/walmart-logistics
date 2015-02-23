@@ -23,12 +23,12 @@ public class LogisticsWSImpl implements LogisticsWS {
     private Log log = LogFactory.getLog(LogisticsWS.class);
 
     @Autowired
-    private GraphServiceImpl graphOperations;
+    private GraphServiceImpl graphService;
 
     @Override
     public Status addMap(String id, String map) throws IllegalMapException {
         log.info("Received new addMap request.");
-        return graphOperations.addGraph(id, map); //TODO: flesh it out
+        return graphService.addGraph(id, map); //TODO: flesh it out
     }
 
     @Override
