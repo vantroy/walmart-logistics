@@ -1,4 +1,4 @@
-package andrade.rodrigo.walmart.domain;
+package andrade.rodrigo.walmart.persistence.domain;
 
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
@@ -11,21 +11,32 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
  */
 
 @NodeEntity
-public class Location {
+public class Location  {
 
     @GraphId
     Long id;
 
-    @Indexed(unique=true)
+    @Indexed(unique = true)
     String name;
+
+    @Indexed
     String map;
+
+    public Location() {
+    }
+
+    public Location(String name, String map) {
+        this.name = name;
+        this.map = map;
+    }
+
+    public Edge leadsTo(Location dest, float weight) {
+        Edge edge = new Edge(this, dest, weight);
+        return edge;
+    }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {

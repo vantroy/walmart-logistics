@@ -1,34 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans  xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:util="http://www.springframework.org/schema/util"
-        xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.0.xsd
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:neo4j="http://www.springframework.org/schema/data/neo4j"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/data/neo4j
-        http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd">
+        http://www.springframework.org/schema/data/neo4j/spring-neo4j.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 
+    <context:annotation-config />
+    <context:spring-configured />
+    <context:component-scan base-package="andrade.rodrigo.walmart"/>
 
-    <neo4j:config graphDatabaseService="graphDatabaseService"
-                  base-package="andrade.rodrigo.walmart.domain"
+    <neo4j:config base-package="andrade.rodrigo.walmart.persistence.domain"
                   storeDirectory="target/test.db"/>
+    <neo4j:repositories base-package="andrade.rodrigo.walmart.persistence.dao"/>
 
-    <util:map id="config">
-        <entry key="enable_remote_shell" value="true"/>
-    </util:map>
-
-    <bean id="graphDbFactory" class="org.neo4j.graphdb.factory.GraphDatabaseFactory"/>
-
-    <bean id="graphDbBuilder" factory-bean="graphDbFactory" factory-method="newEmbeddedDatabaseBuilder">
-        <constructor-arg value="/tmp/neo4j"/>
-    </bean>
-
-    <bean id="graphDbBuilderFinal" factory-bean="graphDbBuilder" factory-method="setConfig">
-        <constructor-arg ref="config"/>
-    </bean>
-
-    <bean id="graphDatabaseService" factory-bean="graphDbBuilderFinal" factory-method="newGraphDatabase" destroy-method="shutdown" />
-
+    <tx:annotation-driven />
 </beans>

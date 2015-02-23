@@ -2,9 +2,9 @@ package andrade.rodrigo.walmart;
 
 import andrade.rodrigo.walmart.constants.Status;
 import andrade.rodrigo.walmart.exceptions.IllegalMapException;
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.graph.DefaultDirectedWeightedGraph;
-import org.jgrapht.graph.DefaultWeightedEdge;
+import andrade.rodrigo.walmart.persistence.dao.LocationRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 
 import java.util.Scanner;
 
@@ -15,16 +15,21 @@ import java.util.Scanner;
  */
 public class GraphService {
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    LocationRepository locationRepo;
+
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    Neo4jTemplate template;
 
     public Status addGraph(String id, String map) throws IllegalMapException {
 
-        // TODO: check persistence if already exists
-        DirectedGraph<String, DefaultWeightedEdge> graph = parseMaptoGraph(map);
+        parseMaptoGraph(map);
         return Status.SERVER_ERROR;
     }
 
-    private DirectedGraph<String, DefaultWeightedEdge> parseMaptoGraph(String map) throws IllegalMapException {
-        DirectedGraph<String, DefaultWeightedEdge> graph = new DefaultDirectedWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+    private void parseMaptoGraph(String map) throws IllegalMapException {
         Scanner scanner = new Scanner(map);
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
@@ -44,7 +49,6 @@ public class GraphService {
 
         }
         scanner.close();
-        return graph;
     }
 
     // Very Rudimentary input checking

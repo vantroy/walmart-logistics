@@ -2,14 +2,20 @@ package andrade.rodrigo.walmart.test;
 
 import andrade.rodrigo.walmart.constants.Status;
 import andrade.rodrigo.walmart.exceptions.IllegalMapException;
+import andrade.rodrigo.walmart.persistence.dao.LocationRepository;
+import andrade.rodrigo.walmart.persistence.domain.Location;
 import andrade.rodrigo.walmart.ws.LogisticsWS;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.traversal.Traverser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,6 +31,15 @@ public class WsTest {
 
     @Autowired
     ApplicationContext ctx;
+
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    LocationRepository locationRepo;
+
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    Neo4jTemplate template;
+
     private LogisticsWS client;
 
     @Before
@@ -100,5 +115,44 @@ public class WsTest {
         assertEquals("A B D, 6.25", res);
     }
 
+    //-- Neo4J specific tests
+    @Test
+    @Transactional
+    public void persistedLocationShouldBeRetrievableFromGraphDb() {
+        Location location = template.save(new Location("A", "SP"));
+        Location retrieveLocation = template.findOne(location.getId(), Location.class);
+        assertEquals("retrieved location matches persisted one", location, retrieveLocation);
+        assertEquals("retrieved movie name matches", "A", retrieveLocation.getName());
+    }
+
+    @Test
+    @Transactional
+    public void persistedLocationShouldBeRetrievableBuProperty() {
+        Location location =  template.save(new Location("A", "SP"));
+        Location retrieveLocation = locationRepo.findByName(location.getName());
+        assertEquals("retrieved location matches persisted one", location, retrieveLocation);
+        assertEquals("retrieved movie name matches", "A", retrieveLocation.getName());
+    }
+
+    @Test
+    @Transactional
+    public void persistentMapWithConnections() {
+        final String WEIGHT = "weight";
+        Location a = new Location("A", "SP");
+        Location b = new Location("B", "SP");
+        Location c = new Location("C", "SP");
+        Location d = new Location("D", "SP");
+
+        template.save(a.leadsTo(b, 1));
+        template.save(b.leadsTo(c, 2));
+        template.save(c.leadsTo(d, 3));
+
+        template.traversalDescription().traverse((Node) a);
+        assertEquals("4", locationRepo.count());
+        Traverser traverser = template.getGraphDatabase()
+                .traversalDescription()
+                .traverse(template.getGraphDatabaseService().getNodeById(a.getId()));
+
+    }
 
 }
