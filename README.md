@@ -28,7 +28,7 @@ WSDL: [http://52.10.60.30:8080/LogisticsWS?wsdl](http://52.10.60.30:8080/Logisti
 
 ### Standalone / teste
 
-O projeto vem preparado com um container Jetty embutido no build. Para startar o WebService basta exexutar da raiz do projeto:
+O projeto vem preparado com um container Jetty embutido no build. Para startar o WebService basta executar da raiz do projeto:
 
 ```
     mvn jetty:run
@@ -41,8 +41,8 @@ container desejado. O projeto foi testado com Tomcat 7.
 
 #### Detalhes:
 
-* Arquivo *db.properties* na pasta *main/resource* indica o caminho onde será criada a base de dados. No linux é preciso garantir que
-o diretório configurado possua permissão de escrita p/ o usuário executando o processo. O db.properties na pasta test/resource
+* Arquivo **db.properties** na pasta **main/resource** indica o caminho onde será criada a base de dados. No *linux é preciso garantir que
+o diretório configurado possua permissão de escrita p/ o usuário executando o processo*. O db.properties na pasta test/resource
 aponta para o target/ portato quaisquer rsquicios da base de testes é eliminada no mvn clean.
 
 
