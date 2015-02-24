@@ -35,9 +35,9 @@ Consulta o menor caminho entre os pontos, e o custo da viagem.
 
 *Parametros:*
 
- - String mapName: nome do mapa inserido com o método addMap
- - String start: id do ponto de origem
- - String destination: id do ponto de destino
+ - String mapName: nome do mapa inserido com o método addMap. Ex: "SP"
+ - String start: id do ponto de origem. Ex: "A"
+ - String destination: id do ponto de destino. Ex: "D"
  - float autonomy: autonomia (km/l, por exemplo) do veículo
  - float ltPrice: valor do litro de combustível
 
