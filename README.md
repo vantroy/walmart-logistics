@@ -9,15 +9,16 @@ em uma instacia Tomcat.
 
 ### Dados de acesso Jenkins:
 
-    Jenkins: [52.10.60.30:8090](52.10.60.30:8080)
-    user: walmart
-    pass: giani
+Jenkins: [52.10.60.30:8090](52.10.60.30:8080)
+user: walmart
+pass: giani
 
 ### Live WebService
 
 Tomcat CXF SOAP service summary: [52.10.228.29:8080](52.10.228.29:8080)
 
 Endpoint: Endpoint address: [http://52.10.60.30:8080/LogisticsWS](http://52.10.60.30:8080/LogisticsWS)
+
 WSDL: [http://52.10.60.30:8080/LogisticsWS?wsdl](http://52.10.60.30:8080/LogisticsWS)
 
 
