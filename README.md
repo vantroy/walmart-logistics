@@ -5,16 +5,17 @@ walmart-logistics
 
 O serviço LogistcsWS é um web service SOAP que expõe 3 métodos, de acordo com o desafio proposto.
 
-* public Status addMap(String id, String map) throws IllegalMapException, IllegalArgumentException;
+* **public Status addMap(String id, String map) throws IllegalMapException, IllegalArgumentException;**
 
  Adiciona na base de grafos os mapas que serão depois pesquisados
 
- **Parametros:**
+ *Parametros:*
 
  - String id: o nome único do mapa. Ex: "SP"
  - String map: string contendo a representação de um ponto no mapa, uma conexão e a distancia entre os pontos **por linha**.
 
  Exemplo:
+
  ```
 A B 10
 B D 15
@@ -24,15 +25,15 @@ B E 50
 D E 30
 ```
 
- **Retorno**
+ *Retorno*
 
  Retorna um ENUM definindo o status da requisição, ou exceções no caso de erro
 
-* public ShortestPathTO queryRoute(String mapName, String start, String destination, float autonomy, float ltPrice) throws IllegalNodesException;
+* **public ShortestPathTO queryRoute(String mapName, String start, String destination, float autonomy, float ltPrice) throws IllegalNodesException;**
 
 Consulta o menor caminho entre os pontos, e o custo da viagem.
 
-**Parametros:**
+*Parametros:*
 
  - String mapName: nome do mapa inserido com o método addMap
  - String start: id do ponto de origem
@@ -40,12 +41,12 @@ Consulta o menor caminho entre os pontos, e o custo da viagem.
  - float autonomy: autonomia (km/l, por exemplo) do veículo
  - float ltPrice: valor do litro de combustível
 
- **Retorno**
+ *Retorno*
 
  Objeto ShortestPathTO que contém o método ```getPath()``` que retona um List<String> ordenado onde cada item é o nome do ponto no mapa que representa a próxima etapa da viagem e o
  método ```calculateTripCost()``` que retorna um float com o valor da jornada, baseado na distancia do menor caminho encontrado, autonomia do veículo e custo do combustível.
 
-* public String queryRouteStr(String mapName, String start, String destination, float autonomy, float ltPrice) throws IllegalNodesException;
+* **public String queryRouteStr(String mapName, String start, String destination, float autonomy, float ltPrice) throws IllegalNodesException;**
 
 Mesmo que o acima, mas retorna uma String simplificada, com o nome dos pontos do mapa contendo o menor caminho separados por espaço e o último item é o valor da viagem. Por exemplo,
 se usarmos o mapa descrito no exemplo do método addMap e consultarmos por menor caminho entre origem ```A``` e destino ```D```, com autonomia 10 e custo por litro 2.5 a resspota será
