@@ -71,7 +71,7 @@ não existia requisito da base ser relacional. Com esse approach, se o projeto f
 embarcado pode facilmente ser substituído por uma instalacão standalone ou cluster bastando alterar o arquivo
 persistence.xml, garantindo assim possibilidade de escalar a plataforma.
 
-*Uma nota sobre o código fonte:* o projeto foi escrito 100% em inglês, desde nome de variáveis até documetação e
+*Uma nota sobre o código fonte:* o projeto foi escrito 100% em inglês, desde nome de variáveis até documentação e
 comentários. Essa é uma prática pessoal que eu costumo manter para garantir que o código seja legível para pessoas
 que não dominem português.
 

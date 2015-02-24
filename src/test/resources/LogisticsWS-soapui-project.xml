@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="LogisticsWS" resourceRoot="${projectDir}" soapui-version="5.0.0" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="LogisticsWSImplServiceSoapBinding" type="wsdl" bindingName="{http://ws.walmart.rodrigo.andrade/}LogisticsWSImplServiceSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://52.10.60.30:8080/LogisticsWS?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://52.10.60.30:8080/LogisticsWS?wsdl"><con:part><con:url>http://52.10.60.30:8080/LogisticsWS?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="LogisticsWSImplService" targetNamespace="http://ws.walmart.rodrigo.andrade/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://ws.walmart.rodrigo.andrade/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://ws.walmart.rodrigo.andrade/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="addMap" type="tns:addMap"/>
+      <xs:element name="addMapResponse" type="tns:addMapResponse"/>
+      <xs:element name="queryRoute" type="tns:queryRoute"/>
+      <xs:element name="queryRouteResponse" type="tns:queryRouteResponse"/>
+      <xs:element name="queryRouteStr" type="tns:queryRouteStr"/>
+      <xs:element name="queryRouteStrResponse" type="tns:queryRouteStrResponse"/>
+      <xs:complexType name="addMap">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addMapResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:status"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryRouteStr">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+          <xs:element name="arg3" type="xs:float"/>
+          <xs:element name="arg4" type="xs:float"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryRouteStrResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryRoute">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+          <xs:element minOccurs="0" name="arg2" type="xs:string"/>
+          <xs:element name="arg3" type="xs:float"/>
+          <xs:element name="arg4" type="xs:float"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryRouteResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:shortestPathTO"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="shortestPathTO">
+        <xs:sequence>
+          <xs:element name="autonomy" type="xs:float"/>
+          <xs:element name="distance" type="xs:float"/>
+          <xs:element name="ltPrice" type="xs:float"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="path" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="status">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="SUCCESS"/>
+          <xs:enumeration value="SERVER_ERROR"/>
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="IllegalArgumentException" type="tns:IllegalArgumentException"/>
+      <xs:complexType name="IllegalArgumentException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="IllegalMapException" type="tns:IllegalMapException"/>
+      <xs:complexType name="IllegalMapException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="IllegalNodesException" type="tns:IllegalNodesException"/>
+      <xs:complexType name="IllegalNodesException">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="message" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="queryRouteStrResponse">
+    <wsdl:part element="tns:queryRouteStrResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryRouteStr">
+    <wsdl:part element="tns:queryRouteStr" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IllegalMapException">
+    <wsdl:part element="tns:IllegalMapException" name="IllegalMapException"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IllegalNodesException">
+    <wsdl:part element="tns:IllegalNodesException" name="IllegalNodesException"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addMap">
+    <wsdl:part element="tns:addMap" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryRoute">
+    <wsdl:part element="tns:queryRoute" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IllegalArgumentException">
+    <wsdl:part element="tns:IllegalArgumentException" name="IllegalArgumentException"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="queryRouteResponse">
+    <wsdl:part element="tns:queryRouteResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addMapResponse">
+    <wsdl:part element="tns:addMapResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="LogisticsWS">
+    <wsdl:operation name="addMap">
+      <wsdl:input message="tns:addMap" name="addMap"></wsdl:input>
+      <wsdl:output message="tns:addMapResponse" name="addMapResponse"></wsdl:output>
+      <wsdl:fault message="tns:IllegalArgumentException" name="IllegalArgumentException"></wsdl:fault>
+      <wsdl:fault message="tns:IllegalMapException" name="IllegalMapException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="queryRouteStr">
+      <wsdl:input message="tns:queryRouteStr" name="queryRouteStr"></wsdl:input>
+      <wsdl:output message="tns:queryRouteStrResponse" name="queryRouteStrResponse"></wsdl:output>
+      <wsdl:fault message="tns:IllegalNodesException" name="IllegalNodesException"></wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="queryRoute">
+      <wsdl:input message="tns:queryRoute" name="queryRoute"></wsdl:input>
+      <wsdl:output message="tns:queryRouteResponse" name="queryRouteResponse"></wsdl:output>
+      <wsdl:fault message="tns:IllegalNodesException" name="IllegalNodesException"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LogisticsWSImplServiceSoapBinding" type="tns:LogisticsWS">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addMap">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addMap">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addMapResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalArgumentException">
+        <soap:fault name="IllegalArgumentException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IllegalMapException">
+        <soap:fault name="IllegalMapException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="queryRouteStr">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="queryRouteStr">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="queryRouteStrResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalNodesException">
+        <soap:fault name="IllegalNodesException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="queryRoute">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="queryRoute">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="queryRouteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="IllegalNodesException">
+        <soap:fault name="IllegalNodesException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LogisticsWSImplService">
+    <wsdl:port binding="tns:LogisticsWSImplServiceSoapBinding" name="LogisticsWSImplPort">
+      <soap:address location="http://52.10.60.30:8080/LogisticsWS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://52.10.60.30:8080/LogisticsWS</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="addMap" bindingOperationName="addMap" type="Request-Response" outputName="addMapResponse" inputName="addMap" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="addMapSP"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://52.10.60.30:8080/LogisticsWS</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.walmart.rodrigo.andrade/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:addMap>
+         <!--Optional:-->
+         <arg0>SP</arg0>
+         <!--Optional:-->
+         <arg1>A B 10
+B D 15
+A C 20
+C D 30
+B E 50
+D E 30</arg1>
+      </ws:addMap>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.walmart.rodrigo.andrade/LogisticsWS/addMap"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation isOneWay="false" action="" name="queryRoute" bindingOperationName="queryRoute" type="Request-Response" outputName="queryRouteResponse" inputName="queryRoute" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://52.10.60.30:8080/LogisticsWS</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.walmart.rodrigo.andrade/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:queryRoute>
+         <!--Optional:-->
+         <arg0>?</arg0>
+         <!--Optional:-->
+         <arg1>?</arg1>
+         <!--Optional:-->
+         <arg2>?</arg2>
+         <arg3>?</arg3>
+         <arg4>?</arg4>
+      </ws:queryRoute>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.walmart.rodrigo.andrade/LogisticsWS/queryRoute"/></con:call></con:operation><con:operation isOneWay="false" action="" name="queryRouteStr" bindingOperationName="queryRouteStr" type="Request-Response" outputName="queryRouteStrResponse" inputName="queryRouteStr" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="Find-SP-A-D"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://52.10.60.30:8080/LogisticsWS</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.walmart.rodrigo.andrade/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ws:queryRouteStr>
+         <arg0>SP</arg0>
+         <arg1>A</arg1>
+         <arg2>D</arg2>
+         <arg3>10.0</arg3>
+         <arg4>2.5</arg4>
+      </ws:queryRouteStr>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://ws.walmart.rodrigo.andrade/LogisticsWS/queryRouteStr"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
