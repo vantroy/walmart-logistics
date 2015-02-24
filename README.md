@@ -72,7 +72,7 @@ embarcado pode facilmente ser substituído por uma instalacão standalone ou clu
 persistence.xml, garantindo assim possibilidade de escalar a plataforma.
 
 Sobre a busca de menor caminho: inicialmente eu iria usar MongoDB para persistência e implementar uma versão do
-algoritmo de Dijkstra, mas as soluçõesde MongoDB embarcado têm pouco suporte, portanto acabei mudei p/ neo4j
+algoritmo de Dijkstra, mas as soluçõesde MongoDB embarcado têm pouco suporte, portanto mudei p/ neo4j
 e efetuo a busca através de query direto na base, ver na interface LocationRepository.
 
 *Uma nota sobre o código fonte:* o projeto foi escrito 100% em inglês, desde nome de variáveis até documentação e
