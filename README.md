@@ -58,8 +58,9 @@ A B D 6.25
 ### Arquitetura
 
 **SOAP vs REST: foi escolhido para esse projeto uma abordagem com SOAP ao invés REST simplesmente pelo
-tempo disponível para desenvolvimento. Pessoalmente, eu considero mais rápido de começar o projeto, embora para este
-serviço REST talvez fosse a melhor alternativa.**
+tempo disponível para desenvolvimento. *Pessoalmente*, eu considero mais rápido de começar o projeto, embora para este
+serviço REST talvez fosse a melhor alternativa. Extender o projeto atual para suportar também uma interface RESTful
+nesse ponto seria fácil.**
 
 O projeto usa Spring 4 para implementação web e DI, Apache CXF para os serviços SOAP e Spring Data Neo4J para a
 camada de persistência.
