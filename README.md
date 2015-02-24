@@ -17,7 +17,7 @@ pass: giani
 
 ### Live WebService
 
-Tomcat CXF SOAP service summary: [http://52.10.228.29:8080](http://52.10.228.29:8080)
+Tomcat CXF SOAP service summary: [http://52.10.60.30:8080](http://52.10.60.30:8080)
 
 Endpoint: Endpoint address: [http://52.10.60.30:8080/LogisticsWS](http://52.10.60.30:8080/LogisticsWS)
 
@@ -28,18 +28,18 @@ WSDL: [http://52.10.60.30:8080/LogisticsWS?wsdl](http://52.10.60.30:8080/Logisti
 
 ### Standalone / teste
 
-    O projeto vem preparado com um container Jetty embutido no build. Para startar o WebService basta exexutar da raiz do projeto:
+O projeto vem preparado com um container Jetty embutido no build. Para startar o WebService basta exexutar da raiz do projeto:
 
-    ```
-        mvn jetty:run
-    ```
+```
+    mvn jetty:run
+```
 
 ### Servidor de aplicação
 
-    Depois de executar o build com ```mvn clean install```, copiar a o arquivo WAR p/ a pasta webapps (ou equivalente) do
-    container desejado. O projeto foi testado com Tomcat 7.
+Depois de executar o build com ```mvn clean install```, copiar a o arquivo WAR p/ a pasta webapps (ou equivalente) do
+container desejado. O projeto foi testado com Tomcat 7.
 
-Detalhes:
+#### Detalhes:
 
 * Arquivo *db.properties* na pasta *main/resource* indica o caminho onde será criada a base de dados. No linux é preciso garantir que
 o diretório configurado possua permissão de escrita p/ o usuário executando o processo. O db.properties na pasta test/resource
