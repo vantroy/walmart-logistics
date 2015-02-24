@@ -43,7 +43,7 @@ Consulta o menor caminho entre os pontos, e o custo da viagem.
 
  *Retorno:*
 
-Objeto ShortestPathTO que contém o método ```getPath()``` que retona um List<String> ordenado onde cada item é o nome do ponto no mapa que representa a próxima etapa da viagem e o
+Objeto ShortestPathTO que contém o método ```getPath()``` que retona um ```List<String>``` ordenado onde cada item é o nome do ponto no mapa que representa a próxima etapa da viagem e o
 método ```calculateTripCost()``` que retorna um float com o valor da jornada, baseado na distancia do menor caminho encontrado, autonomia do veículo e custo do combustível.
 
 * **public String queryRouteStr(String mapName, String start, String destination, float autonomy, float ltPrice) throws IllegalNodesException;**
