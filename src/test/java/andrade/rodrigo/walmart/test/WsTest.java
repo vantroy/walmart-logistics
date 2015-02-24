@@ -3,11 +3,12 @@ package andrade.rodrigo.walmart.test;
 import andrade.rodrigo.walmart.constants.RelationType;
 import andrade.rodrigo.walmart.constants.Status;
 import andrade.rodrigo.walmart.exceptions.IllegalMapException;
+import andrade.rodrigo.walmart.exceptions.IllegalNodesException;
 import andrade.rodrigo.walmart.persistence.dao.LocationRepository;
 import andrade.rodrigo.walmart.persistence.domain.Location;
+import andrade.rodrigo.walmart.persistence.domain.ShortestPathTO;
 import andrade.rodrigo.walmart.ws.LogisticsWS;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.neo4j.graphdb.*;
@@ -105,7 +106,6 @@ public class WsTest {
         float fuelPrice = 2.5f;
         String expectedPath = "A B D";
 
-
         client.addMap(mapId, walMap);
         Location A = locationRepo.findByNameAndMap("A", mapId);
         Location D = locationRepo.findByNameAndMap("D", mapId);
@@ -152,6 +152,12 @@ public class WsTest {
         client.addMap(id, map);
     }
 
+    @Test(expected=IllegalArgumentException.class)
+    @Transactional
+    public void testAddMapNullParameter() throws IllegalMapException {
+        client.addMap("YOLO", null);
+    }
+
     @Test
     public void testAddMapExceptionWrapped() {
         // Asserts if the right type of "wrapped" exception is properly signaled
@@ -170,16 +176,21 @@ public class WsTest {
     }
 
     @Test
-    @Ignore
-    public void testQueryRoute() {
+    @Transactional
+    public void testQueryRoute() throws IllegalNodesException, IllegalMapException {
         String id = "SP";
         String start = "A";
         String dest = "D";
         float autonomy = 10f;
         float ltPrice = 2.5f;
 
-        String res = client.queryRoute(id, start, dest, autonomy, ltPrice);
-        assertEquals("A B D, 6.25", res);
+        client.addMap("SP", walMap);
+        ShortestPathTO res = client.queryRoute(id, start, dest, autonomy, ltPrice);
+        assertEquals("A B D 6.25", res.toString());
+
+        String resStr = client.queryRouteStr(id, start, dest, autonomy, ltPrice);
+        assertEquals("A B D 6.25", resStr);
+
     }
 
     //-- Neo4J specific tests

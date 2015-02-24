@@ -3,6 +3,8 @@ package andrade.rodrigo.walmart.ws;
 import andrade.rodrigo.walmart.GraphService;
 import andrade.rodrigo.walmart.constants.Status;
 import andrade.rodrigo.walmart.exceptions.IllegalMapException;
+import andrade.rodrigo.walmart.exceptions.IllegalNodesException;
+import andrade.rodrigo.walmart.persistence.domain.ShortestPathTO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.cxf.feature.Features;
@@ -26,13 +28,22 @@ public class LogisticsWSImpl implements LogisticsWS {
     private GraphService graphService;
 
     @Override
-    public Status addMap(String id, String map) throws IllegalMapException {
+    public Status addMap(String id, String map) throws IllegalMapException, IllegalArgumentException {
         log.info("Received new addMap request.");
-        return graphService.addGraph(id, map); //TODO: flesh it out
+        if(id ==null | map == null) {
+            throw new IllegalArgumentException("NULL arguments not allowed");
+        }
+        return graphService.addGraph(id, map);
     }
 
     @Override
-    public String queryRoute(String mapName, String start, String destination, float autonomy, float ltPrice) {
-        return "not yet";  //TODO: flesh it out
+    public ShortestPathTO queryRoute(String mapName, String start, String destination, float autonomy, float ltPrice) throws IllegalNodesException {
+        ShortestPathTO path = graphService.findShortestPath(mapName, start, destination, autonomy, ltPrice);
+        return path;
+    }
+
+    @Override
+    public String queryRouteStr(String mapName, String start, String destination, float autonomy, float ltPrice) throws IllegalNodesException {
+        return queryRoute(mapName, start, destination, autonomy, ltPrice).toString();
     }
 }

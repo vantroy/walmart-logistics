@@ -8,7 +8,6 @@ package andrade.rodrigo.walmart.constants;
 public enum Status {
 
     SUCCESS,
-    ID_ALREADY_EXISTS,
-    SERVER_ERROR;
+    SERVER_ERROR; // Unused
 
 }
