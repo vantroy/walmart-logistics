@@ -107,6 +107,7 @@ O projeto vem preparado com um container **Jetty** embutido no build. Para start
 ```
 
 Acessar o sumário do serviço em localhost:8080/
+
 Ver a seção Integração Contínua no final deste documento para exemplos de como acessar o WSDL.
 
 ### Servidor de aplicação
@@ -118,7 +119,7 @@ container desejado. O projeto foi testado com Tomcat 7.
 
 * Arquivo **db.properties** na pasta **main/resource** indica o caminho onde será criada a base de dados. No *linux é preciso garantir que
 o diretório configurado possua permissão de escrita p/ o usuário executando o processo*. O db.properties na pasta test/resource
-aponta para o target/ portato quaisquer rsquicios da base de testes é eliminada no mvn clean.
+aponta para o target/ portato quaisquer rersquicios da base de testes é eliminada no mvn clean.
 
 
 ## Integração Contínua
