@@ -97,6 +97,9 @@ O projeto vem preparado com um container **Jetty** embutido no build. Para start
     mvn jetty:run
 ```
 
+Acessar o sumário do serviço em localhost:8080/
+Ver a seção Integração Contínua no final deste documento para exemplos de como acessar o WSDL.
+
 ### Servidor de aplicação
 
 Depois de executar o build com ```mvn clean package```, copiar a o arquivo WAR p/ a pasta webapps (ou equivalente) do
@@ -122,7 +125,7 @@ user: walmart
 pass: giani
 ```
 
-### Live WebService
+### Live Demo WebService
 
 Tomcat CXF SOAP service summary: [http://52.10.60.30:8080](http://52.10.60.30:8080)
 
