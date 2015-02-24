@@ -4,25 +4,21 @@ walmart-logistics
 
 ## Continuos Integration
 
-Criados na AWS estao duas instancias EC2 (t3-small). Uma delas rodando Jenkins com a CI do projeto, e o segundo servindo o WebService
+Na AWS esta uma  EC2 (t3-small) rodando Jenkins com a CI do projeto, e também servindo o WebService
 em uma instacia Tomcat.
 
 ### Dados de acesso Jenkins:
 
-```
     Jenkins: [52.10.60.30:8090](52.10.60.30:8080)
     user: walmart
     pass: giani
-```
 
 ### Live WebService
-```
+
 Tomcat CXF SOAP service summary: [52.10.228.29:8080](52.10.228.29:8080)
 
 Endpoint: Endpoint address: [http://52.10.60.30:8080/LogisticsWS](http://52.10.60.30:8080/LogisticsWS)
 WSDL: [http://52.10.60.30:8080/LogisticsWS?wsdl](http://52.10.60.30:8080/LogisticsWS)
-
-```
 
 
 ## Execução:
