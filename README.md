@@ -1,1 +1,50 @@
-# walmart-logistics
+walmart-logistics
+=================
+
+
+## Continuos Integration
+
+Criados na AWS estao duas instancias EC2 (t3-small). Uma delas rodando Jenkins com a CI do projeto, e o segundo servindo o WebService
+em uma instacia Tomcat.
+
+### Dados de acesso Jenkins:
+
+```
+    Jenkins: [52.10.60.30:8090](52.10.60.30:8080)
+    user: walmart
+    pass: giani
+```
+
+### Live WebService
+```
+Tomcat CXF SOAP service summary: [52.10.228.29:8080](52.10.228.29:8080)
+
+Endpoint: Endpoint address: [http://52.10.60.30:8080/LogisticsWS](http://52.10.60.30:8080/LogisticsWS)
+WSDL: [http://52.10.60.30:8080/LogisticsWS?wsdl](http://52.10.60.30:8080/LogisticsWS)
+
+```
+
+
+## Execução:
+
+### Standalone / teste
+
+    O projeto vem preparado com um container Jetty embutido no build. Para startar o WebService basta exexutar da raiz do projeto:
+
+    ```
+        mvn jetty:run
+    ```
+
+### Servidor de aplicação
+
+    Depois de executar o build com ```mvn clean install```, copiar a o arquivo WAR p/ a pasta webapps (ou equivalente) do
+    container desejado. O projeto foi testado com Tomcat 7.
+
+Detalhes:
+
+* Arquivo *db.properties* na pasta *main/resource* indica o caminho onde será criada a base de dados. No linux é preciso garantir que
+o diretório configurado possua permissão de escrita p/ o usuário executando o processo. O db.properties na pasta test/resource
+aponta para o target/ portato quaisquer rsquicios da base de testes é eliminada no mvn clean.
+
+
+
