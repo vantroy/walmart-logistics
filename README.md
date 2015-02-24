@@ -63,13 +63,17 @@ serviço REST talvez fosse a melhor alternativa. Extender o projeto atual para s
 nesse ponto seria fácil.*
 
 O projeto usa Spring 4 para implementação web e DI, Apache CXF para os serviços SOAP e Spring Data Neo4J para a
-camada de persistência. Gerenciamento de deppendências e build é feito com Maven 3.
+camada de persistência, com uma instancia embarcada do Neo4J. Gerenciamento de deppendências e build é feito com Maven 3.
 
 Para a persistência dos mapas, um requisito importante era que a base fosse Embedded para facilitar a avaliação. Dessa
 forma, o [Neo4J](http://neo4j.com), uma base de grafos que suporta deployments embedded foi uma escolha natural, já que
 não existia requisito da base ser relacional. Com esse approach, se o projeto for migrado para produção, o Neo4J
 embarcado pode facilmente ser substituído por uma instalacão standalone ou cluster bastando alterar o arquivo
 persistence.xml, garantindo assim possibilidade de escalar a plataforma.
+
+Sobre a busca de menor caminho: inicialmente eu iria usar MongoDB para persistência e implementar uma versão do
+algoritmo de Dijkstra, mas as soluçõesde MongoDB embarcado têm pouco suporte, portanto acabei mudei p/ neo4j
+e efetuo a busca através de query direto na base, ver na interface LocationRepository.
 
 *Uma nota sobre o código fonte:* o projeto foi escrito 100% em inglês, desde nome de variáveis até documentação e
 comentários. Essa é uma prática pessoal que eu costumo manter para garantir que o código seja legível para pessoas
