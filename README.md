@@ -58,7 +58,7 @@ A B D 6.25
 ### Arquitetura
 
 *SOAP vs REST: foi escolhido para esse projeto uma abordagem com SOAP ao invés REST simplesmente pelo
-tempo disponível para desenvolvimento. **Pessoalmente**, eu considero mais rápido de começar o projeto, embora para este
+tempo disponível para desenvolvimento.* ***Pessoalmente,*** *eu considero mais rápido de começar o projeto, embora para este
 serviço REST talvez fosse a melhor alternativa. Extender o projeto atual para suportar também uma interface RESTful
 nesse ponto seria fácil.*
 
