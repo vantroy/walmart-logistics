@@ -57,14 +57,14 @@ A B D 6.25
 
 ### Arquitetura
 
-***SOAP vs REST: foi escolhido para esse projeto uma abordagem com SOAP ao invés REST simplesmente pelo
+**SOAP vs REST: foi escolhido para esse projeto uma abordagem com SOAP ao invés REST simplesmente pelo
 tempo disponível para desenvolvimento. Pessoalmente, eu considero mais rápido de começar o projeto, embora para este
-serviço REST talvez fosse a melhor alternativa.***
+serviço REST talvez fosse a melhor alternativa.**
 
 O projeto usa Spring 4 para implementação web e DI, Apache CXF para os serviços SOAP e Spring Data Neo4J para a
 camada de persistência.
 
-Para a persistência dos mapas, um requisito importante era que a base fosse Embedded para facilitar a avaliaçãp. Dessa
+Para a persistência dos mapas, um requisito importante era que a base fosse Embedded para facilitar a avaliação. Dessa
 forma, o [Neo4J](http://neo4j.com), uma base de grafos que suporta deployments embedded foi uma escolha natural, já que
 não existia requisito da base ser relacional. Com esse approach, se o projeto for migrado para produção, o Neo4J
 embarcado pode facilmente ser substituído por uma instalacão standalone ou cluster bastando alterar o arquivo
@@ -83,9 +83,9 @@ Para criar o build, rodar da raiz do projeto:
 Será criado no diretório target o arquivo **walmartLogistics-1.0-SNAPSHOT.war**
 
 ### Testes
-Durante o build serão executados testes unitários. É criado no target uma versão da base de dados usada nos testes e
-os testes com o webservice usam um server local com transporte do tipo local, para não depender do ambiente. O cliente
-WS tb é criado no ambiente de testes e não interage com nehum serviço esterno ao processo de testes.
+Durante o build serão executados testes unitários. É criado no diretório target uma versão da base de dados usada nos testes e
+os testes com o webservice criam um server interno com transporte do tipo local, para não depender do ambiente. O cliente
+WS tb é criado no ambiente de testes e não interage com nehum serviço exerno ao processo de testes.
 
 ## Execução
 
