@@ -129,7 +129,7 @@ em uma instacia Tomcat.
 
 ### Dados de acesso Jenkins:
 
-Jenkins: [http://52.10.60.30:8090](http://52.10.60.30:8080)
+Jenkins: [http://52.10.60.30:8090](http://52.10.60.30:8090)
 ```
 user: walmart
 pass: giani
